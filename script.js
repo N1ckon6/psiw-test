@@ -782,7 +782,7 @@ function displayReviewMode() {
         
         // Pytanie
         const questionTitle = document.createElement('h4');
-        questionTitle.textContent = `${qIndex + 1}. ${q.Pytanie}`;
+        questionTitle.textContent = `${qIndex + 1}/40 ${q.Pytanie}`;
         reviewBox.appendChild(questionTitle);
 
         // Lista opcji
