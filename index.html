@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Testy PSiW - Wielokrotny Wybór</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="quiz-container">
+        <h1>Testy PSiW (Programowanie Systemów)</h1>
+        
+        <div id="top-controls"> <button id="shuffle-btn">Przetasuj pytania</button>
+            <button id="review-btn">Przeglądaj odpowiedzi</button>
+            <button id="return-btn" class="hidden">Wróć do testu</button> </div>
+        
+        <div id="quiz-area">
+            </div>
+
+        <div id="nav-container" class="hidden">
+            <button id="prev-btn" class="hidden">Poprzednie pytanie</button> 
+            <button id="next-btn" class="hidden">Następne pytanie</button>
+            <button id="show-results-btn" class="hidden">Pokaż wyniki</button>
+        </div>
+
+        <div id="review-area" class="hidden">
+            </div>
+
+        <div id="result-area" class="hidden">
+            <h2>Wyniki Testu</h2>
+            <p id="score-text"></p>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
