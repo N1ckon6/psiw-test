@@ -660,7 +660,7 @@ function displayQuestion() {
         
         // Numer i tekst pytania
         const questionTitle = document.createElement('h3');
-        questionTitle.textContent = `${currentQuestionIndex + 1}. ${currentQ.Pytanie}`;
+        questionTitle.textContent = `${currentQuestionIndex + 1}/40 ${currentQ.Pytanie}`;
         questionBox.appendChild(questionTitle);
         
         // Lista opcji
@@ -782,7 +782,7 @@ function displayReviewMode() {
         
         // Pytanie
         const questionTitle = document.createElement('h4');
-        questionTitle.textContent = `${qIndex + 1}/40 ${q.Pytanie}`;
+        questionTitle.textContent = `${qIndex + 1}. ${q.Pytanie}`;
         reviewBox.appendChild(questionTitle);
 
         // Lista opcji
