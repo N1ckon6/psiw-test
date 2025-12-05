@@ -624,7 +624,18 @@ function shuffleQuiz() {
     hideAllViews();
     currentQuestionIndex = 0; 
     userAnswers = []; 
+    
+    // --- NOWA LOGIKA: RANDOIMZACJA ODPOWIEDZI I PRZECHOWYWANIE KOLEJNOŚCI ---
+    quizData.forEach(q => {
+        let optionsCopy = [...q.Opcje]; // Tworzymy kopię opcji
+        shuffleArray(optionsCopy);      // Przetasowanie opcji
+        q.CurrentOpcje = optionsCopy;   // Dodajemy przetarsowaną kolejność do obiektu pytania
+    });
+    // --- KONIEC NOWEJ LOGIKI ---
+
+    // Randoimzacja pytań
     shuffleArray(quizData); 
+    
     displayQuestion(); 
 }
 
@@ -666,19 +677,17 @@ function displayQuestion() {
         const optionsList = document.createElement('div');
         optionsList.className = 'option-list';
 
-        // --- RANDOIMZACJA ODPOWIEDZI ---
-        let shuffledOptions = [...currentQ.Opcje]; // Tworzymy kopię
-        shuffleArray(shuffledOptions); // Przetasowanie kopii
-        // --- KONIEC RANDOIMZACJI ---
+        // Używamy przetabowanej kolejności, jeśli istnieje, lub oryginalnej
+        const optionsToRender = currentQ.CurrentOpcje || currentQ.Opcje; 
 
-        shuffledOptions.forEach((optionText) => { // Używamy przetabowanej listy
+        optionsToRender.forEach((optionText) => { 
             const label = document.createElement('label');
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.name = `q${currentQ.ID}`;
             checkbox.value = optionText;
             
-            // Odtwarzanie zaznaczenia (ważne przy powrocie/nawigacji)
+            // Odtwarzanie zaznaczenia
             const savedAnswers = userAnswers[currentQuestionIndex] || [];
             if (savedAnswers.includes(optionText)) {
                 checkbox.checked = true;
@@ -789,10 +798,13 @@ function displayReviewMode() {
         questionTitle.textContent = `${qIndex + 1}. ${q.Pytanie}`;
         reviewBox.appendChild(questionTitle);
 
-        // Lista opcji (NIE MIESZANA W TRYBIE PRZEGLĄDU)
+        // Lista opcji
         const optionsList = document.createElement('ul');
 
-        q.Opcje.forEach((optionText) => {
+        // Używamy przetabowanej kolejności, jeśli istnieje, lub oryginalnej
+        const optionsToRender = q.CurrentOpcje || q.Opcje;
+        
+        optionsToRender.forEach((optionText) => {
             const listItem = document.createElement('li');
             listItem.className = 'review-option';
             
