@@ -599,7 +599,7 @@ const resultArea = document.getElementById('result-area');
 const scoreText = document.getElementById('score-text');
 const shuffleBtn = document.getElementById('shuffle-btn'); 
 const reviewBtn = document.getElementById('review-btn'); 
-const returnBtn = document.getElementById('return-btn'); // Nowe odniesienie
+const returnBtn = document.getElementById('return-btn'); 
 const reviewArea = document.getElementById('review-area'); 
 
 // Funkcja do ukrywania wszystkich kontenerów głównych
@@ -608,7 +608,7 @@ function hideAllViews() {
     reviewArea.classList.add('hidden');
     resultArea.classList.add('hidden');
     navContainer.classList.add('hidden'); 
-    returnBtn.classList.add('hidden'); // Ukrywamy przycisk powrotu
+    returnBtn.classList.add('hidden'); 
 }
 
 // Funkcja do przetasowania elementów tablicy
@@ -650,7 +650,6 @@ function displayQuestion() {
     hideAllViews();
     quizArea.classList.remove('hidden');
     navContainer.classList.remove('hidden'); 
-    // returnBtn.classList.add('hidden'); - Już ukryte w hideAllViews()
     quizArea.innerHTML = '';
     
     if (currentQuestionIndex < quizData.length) {
@@ -660,21 +659,26 @@ function displayQuestion() {
         
         // Numer i tekst pytania
         const questionTitle = document.createElement('h3');
-        questionTitle.textContent = `${currentQuestionIndex + 1}/40 ${currentQ.Pytanie}`;
+        questionTitle.textContent = `${currentQuestionIndex + 1}. ${currentQ.Pytanie}`;
         questionBox.appendChild(questionTitle);
         
         // Lista opcji
         const optionsList = document.createElement('div');
         optionsList.className = 'option-list';
 
-        currentQ.Opcje.forEach((optionText) => {
+        // --- RANDOIMZACJA ODPOWIEDZI ---
+        let shuffledOptions = [...currentQ.Opcje]; // Tworzymy kopię
+        shuffleArray(shuffledOptions); // Przetasowanie kopii
+        // --- KONIEC RANDOIMZACJI ---
+
+        shuffledOptions.forEach((optionText) => { // Używamy przetabowanej listy
             const label = document.createElement('label');
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
             checkbox.name = `q${currentQ.ID}`;
             checkbox.value = optionText;
             
-            // Odtwarzanie zaznaczenia
+            // Odtwarzanie zaznaczenia (ważne przy powrocie/nawigacji)
             const savedAnswers = userAnswers[currentQuestionIndex] || [];
             if (savedAnswers.includes(optionText)) {
                 checkbox.checked = true;
@@ -773,7 +777,7 @@ function showResults() {
 function displayReviewMode() {
     hideAllViews();
     reviewArea.classList.remove('hidden');
-    returnBtn.classList.remove('hidden'); // Pokazujemy przycisk powrotu!
+    returnBtn.classList.remove('hidden'); 
     reviewArea.innerHTML = '<h2>Przegląd wszystkich pytań i poprawnych odpowiedzi:</h2>';
 
     quizData.forEach((q, qIndex) => {
@@ -785,7 +789,7 @@ function displayReviewMode() {
         questionTitle.textContent = `${qIndex + 1}. ${q.Pytanie}`;
         reviewBox.appendChild(questionTitle);
 
-        // Lista opcji
+        // Lista opcji (NIE MIESZANA W TRYBIE PRZEGLĄDU)
         const optionsList = document.createElement('ul');
 
         q.Opcje.forEach((optionText) => {
@@ -804,8 +808,6 @@ function displayReviewMode() {
         reviewBox.appendChild(optionsList);
         reviewArea.appendChild(reviewBox);
     });
-    
-    // Usuwamy dynamiczne tworzenie przycisku powrotu, ponieważ jest teraz w HTML
 }
 
 
@@ -815,7 +817,7 @@ prevBtn.addEventListener('click', previousQuestion);
 showResultsBtn.addEventListener('click', showResults);
 shuffleBtn.addEventListener('click', shuffleQuiz); 
 reviewBtn.addEventListener('click', displayReviewMode); 
-returnBtn.addEventListener('click', displayQuestion); // Nowy obługiwacz dla przycisku powrotu
+returnBtn.addEventListener('click', displayQuestion); 
 
 // Inicjalizacja: Wyświetlamy pierwsze pytanie po załadowaniu
 displayQuestion();
