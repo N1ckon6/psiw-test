@@ -224,8 +224,8 @@ const quizData = [
       "Typ": "Wielokrotny Wybór",
       "Opcje": [
         "może być blokująca, jeżeli semafor na początku był opuszczony",
-        "nie může być wykonana na semaforze binarnym",
-        "nigdy nie będzie blokującdo",
+        "nie może być wykonana na semaforze binarnym",
+        "nigdy nie będzie blokująca",
         "nie będzie blokująca, gdy semafor na początku był podniesiony"
       ],
       "PrawidłoweOdp": [
